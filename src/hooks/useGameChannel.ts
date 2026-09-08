@@ -40,8 +40,9 @@ export function useGameChannel(room: string | null, meta: PresenceMeta, handlers
 
     channel
       .on("broadcast", { event: "*" }, (message) => {
-        const payload = (message.payload ?? {}) as Record<string, unknown>;
-        h.current.onEvent?.(String(message.event), payload);
+        const m = message as Record<string, unknown>;
+        const payload = (m["payload"] ?? {}) as Record<string, unknown>;
+        h.current.onEvent?.(String(m["event"]), payload);
       })
       .on("presence", { event: "sync" }, () => {
         const roster = Object.entries(channel.presenceState<PresenceMeta>()).map(([id, metas]) => {
