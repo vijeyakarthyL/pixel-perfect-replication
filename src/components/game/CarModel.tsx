@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 import * as THREE from "three";
-import { Text } from "@react-three/drei";
 
 type Props = {
   primary: string;
   secondary: string;
   accent: string;
-  number?: number;
   hideCockpit?: boolean;
 };
 
@@ -14,7 +12,7 @@ type Props = {
  * Stylised open-wheel car built from primitives — nose, monocoque, sidepods,
  * front/rear wings, halo and four exposed wheels.
  */
-export function CarModel({ primary, secondary, accent, number, hideCockpit }: Props) {
+export function CarModel({ primary, secondary, accent, hideCockpit }: Props) {
   const bodyMat = useMemo(
     () => new THREE.MeshStandardMaterial({ color: primary, metalness: 0.55, roughness: 0.32 }),
     [primary],
@@ -112,18 +110,6 @@ export function CarModel({ primary, secondary, accent, number, hideCockpit }: Pr
         <mesh position={[0, 0.66, 0.3]} castShadow material={accentMat}>
           <sphereGeometry args={[0.19, 16, 12]} />
         </mesh>
-      )}
-      {number !== undefined && (
-        <Text
-          position={[0, 0.79, -0.05]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          fontSize={0.34}
-          color={accent}
-          anchorX="center"
-          anchorY="middle"
-        >
-          {String(number)}
-        </Text>
       )}
       {wheel(0.82, 1.42, 0.36)}
       {wheel(-0.82, 1.42, 0.36)}
